@@ -16,6 +16,7 @@ model User {
   lastName     String
   avatarUrl    String
   // bio          String?
+  posts        Post[]
   Guestbook    GuestbookEntry[]
 
   createdAt DateTime @default(now())
@@ -27,4 +28,16 @@ model GuestbookEntry {
   message   String
   createdAt DateTime @default(now())
   User      User     @relation(fields: [userId], references: [id])
+}
+
+model Post {
+  id                  String         @id @default(cuid())
+  content             String
+  userId              String
+  user                User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+
+  createdAt DateTime @default(now())
+
+  @@map("posts")
 }

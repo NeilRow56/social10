@@ -32,7 +32,7 @@ export default async function Home() {
         </div>
       ) : (
         <div className='mt-10 flex w-full items-center gap-x-4'>
-          <LoginLink>
+          <LoginLink postLoginRedirectURL='/guestbook'>
             <Button>Sign in</Button>
           </LoginLink>
 
