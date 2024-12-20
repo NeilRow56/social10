@@ -1,6 +1,15 @@
 import { Button } from '@/components/ui/button'
+import {
+  RegisterLink,
+  LoginLink,
+  LogoutLink
+} from '@kinde-oss/kinde-auth-nextjs/components'
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 
-export default function Home() {
+export default async function Home() {
+  const { getUser } = getKindeServerSession()
+  const user = await getUser()
+
   return (
     <section className='mx-auto flex h-screen w-full flex-col items-center justify-center lg:w-[60%]'>
       <h1 className='scroll-m-20 text-center text-3xl font-semibold tracking-normal md:text-4xl lg:text-5xl xl:text-6xl'>
@@ -11,11 +20,23 @@ export default function Home() {
         latest updates to in-depth tutorials and resources.
       </p>
 
-      <div className='mt-10 flex items-center gap-x-4'>
-        <Button>Sign in</Button>
+      {user ? (
+        <LogoutLink className='mt-10'>
+          <Button variant='destructive'>Logout</Button>
+        </LogoutLink>
+      ) : (
+        <div className='mt-10 flex items-center gap-x-4'>
+          <LoginLink>
+            <Button>Sign in</Button>
+          </LoginLink>
 
-        <Button variant='secondary'>Register</Button>
-      </div>
+          <RegisterLink>
+            <Button variant='outline' className='bg-slate-200'>
+              Sign up
+            </Button>
+          </RegisterLink>
+        </div>
+      )}
     </section>
   )
 }
