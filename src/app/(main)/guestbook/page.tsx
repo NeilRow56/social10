@@ -27,7 +27,7 @@ async function getData() {
 const GuestbookRoute = async () => {
   const data = await getData()
   return (
-    <div className='flex h-screen w-screen flex-col items-center justify-center'>
+    <div className='mx-auto mt-28 flex'>
       <Card className='w-[400px]'>
         <CardHeader>
           <CardTitle>Guestbook Page</CardTitle>
@@ -40,7 +40,10 @@ const GuestbookRoute = async () => {
 
           <div className='mt-8'>
             {data.map((item: any) => (
-              <div className='flex w-full items-center justify-between'>
+              <div
+                key={item.id}
+                className='flex w-full items-center justify-between'
+              >
                 <div className='flex'>
                   <p className='mr-1'>{item.User.firstName}:</p>
                   <p>{item.message}</p>
