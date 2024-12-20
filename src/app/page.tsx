@@ -5,6 +5,7 @@ import {
   LogoutLink
 } from '@kinde-oss/kinde-auth-nextjs/components'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import Link from 'next/link'
 
 export default async function Home() {
   const { getUser } = getKindeServerSession()
@@ -21,11 +22,16 @@ export default async function Home() {
       </p>
 
       {user ? (
-        <LogoutLink className='mt-10'>
-          <Button variant='destructive'>Logout</Button>
-        </LogoutLink>
+        <div className='mt-5'>
+          <LogoutLink className='mt-10'>
+            <Button variant='destructive'>Logout</Button>
+          </LogoutLink>
+          <Button asChild className='ml-5'>
+            <Link href='/guestbook'>Guest Book</Link>
+          </Button>
+        </div>
       ) : (
-        <div className='mt-10 flex items-center gap-x-4'>
+        <div className='mt-10 flex w-full items-center gap-x-4'>
           <LoginLink>
             <Button>Sign in</Button>
           </LoginLink>
