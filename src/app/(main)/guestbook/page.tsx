@@ -1,13 +1,22 @@
 import PostEditor from '@/components/posts/editor/PostEditor'
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import Post from '@/components/posts/Post'
+import db from '@/lib/db'
+import { postDataInclude } from '@/lib/types'
 
 const GuestbookRoute = async () => {
-  const { getUser } = getKindeServerSession()
-  const user = await getUser()
+  const posts = await db.post.findMany({
+    include: postDataInclude,
+    orderBy: {
+      createdAt: 'desc'
+    }
+  })
   return (
-    <main className='h-[200vh] w-full'>
-      <div className='w-full'>
+    <main className='w-full min-w-0'>
+      <div className='w-full min-w-0 space-y-5'>
         <PostEditor />
+        {posts.map(post => (
+          <Post key={post.id} post={post} />
+        ))}
       </div>
     </main>
   )
